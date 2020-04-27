@@ -34,7 +34,7 @@ export default class BlockUnit extends Component{
         const {  header, h , obj, co2, smoke}=this.props;
         return(
                 <td className={this.state.blocks.Active? 'table-success':'none'} >
-                    <div style={{height: "150px"}}>
+                    <div style={{height: "150px", width:"150px"}}>
                         {this.state.blocks.Active ?
                             (<div>
                                 <p>Floor = {this.props.h+1}  </p>

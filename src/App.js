@@ -10,7 +10,7 @@ class App extends Component{
     super(props);
     this.state={
       FloorNo:0,
-      NoofRooms:[],
+      NoofRooms:0,
       NoofRoomsList:[],
       RoomsCount:0,
       blocks:[{Rooms:[{Active:false},{Active: false}, {Active: false}, {Active: false}, {Active: false}, {Active: false}],},
@@ -40,20 +40,16 @@ class App extends Component{
   }
 
   getNoofRooms(){
-    // for(var i= 0 ; i <this.state.FloorNo+1 ; i++){
-    //   axios.get(`http://localhost:5000/getRoomsCount/` + i).then((response) => {
-    //   console.log(response.data);
-    //   console.log("asasa");
-    //     if(response.data.count+ 1>this.state.NoofRooms.length){
-    //       this.setState({
-    //         NoofRooms:response.data.data,
-    //       });
-    //       console.log(this.state.NoofRooms);
-    //     }
-    //   });
-    //
-    // }
-
+      axios.get(`http://localhost:5000/MaxRoomCount/`).then((response) => {
+          this.setState({
+            NoofRooms:response.data.maximumRoom,
+          }, ()=>{
+            for(var i=0; i<response.data.maximumRoom; i++){
+              this.state.NoofRoomsList.push(i);
+            }
+          });
+          console.log(this.state.NoofRooms);
+      });
     }
 
   componentDidMount() {
@@ -65,20 +61,20 @@ class App extends Component{
 
 
   render() {
+
     return (
         <div>
           <table className="table table-bordered">
             <thead>
             <tr className="table-dark">
               <th>Number</th>
-              {this.state.blocks.map((block,i)=>{
+              {this.state.NoofRoomsList.map((block,i)=>{
                 return(
                     <th>
                       Room {i+1}
                     </th>
                 )
               })}
-              <th>Room 8</th>
             </tr>
             </thead>
             <tbody>
