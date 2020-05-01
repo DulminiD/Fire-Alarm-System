@@ -12,6 +12,7 @@ export default class Block extends Component{
         }
     }
     componentWillReceiveProps(nextProps, nextContext) {
+        //Getting the properties from the App.js
         this.setState({
             blocks:nextProps.o.Rooms,
             header:nextProps.header
@@ -20,6 +21,7 @@ export default class Block extends Component{
     }
 
     getBlockUnit(){
+        //Sending the room data in the received floor data to BlockUnit
         return this.state.blocks.map((res, i)=>{
             return  <BlockUnit header={this.state.header} h={this.props.header} obj={this.state.blocks[i]} />
         })

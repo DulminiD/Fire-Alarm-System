@@ -13,6 +13,7 @@ export default class BlockUnit extends Component{
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
+        //Getting the properties from Block
         this.setState({
             co2danger:false,
             smokedanger:false,
@@ -33,7 +34,7 @@ export default class BlockUnit extends Component{
     render() {
         const {  header, h , obj, co2, smoke}=this.props;
         return(
-                <td className={this.state.blocks.Active? 'table-success':'none'} >
+                <td className={this.state.blocks.Active? 'table-success':'table-warning'} >
                     <div style={{height: "150px", width:"150px"}}>
                         {this.state.blocks.Active ?
                             (<div>
@@ -41,7 +42,9 @@ export default class BlockUnit extends Component{
                                 <p>Room = {this.props.obj.RoomNo}  </p>
                                 <p className={this.state.co2danger ? 'table-danger' : 'none'}>CO2 Level = {this.props.obj.CO2Level}  </p>
                                 <p className={this.state.smokedanger ? 'table-danger' : 'none'}>Smoke Level = {this.props.obj.SmokeLevel}</p>
-                            </div>) : (null)
+                            </div>) : (<div>
+                                <p>Not Active</p>
+                            </div>)
                         }
                     </div>
                 </td>

@@ -21,6 +21,7 @@ class App extends Component{
       ]}
   }
   getDetails() {
+      //Get all the details from the REST API
     axios.get("http://localhost:5000/all").then(res => {
       this.setState({
         blocks: res.data
@@ -32,6 +33,7 @@ class App extends Component{
 
   }
   getFloorCount(){
+      //Getting the floor count from the REST API
     axios.get(`http://localhost:5000/getFloorCount`).then((response) => {
       this.setState({
         FloorNo:response.data.count + 1
@@ -40,6 +42,7 @@ class App extends Component{
   }
 
   getNoofRooms(){
+      //Getting the maximum number of rooms compared to rooms in each floor
       axios.get(`http://localhost:5000/MaxRoomCount/`).then((response) => {
           this.setState({
             NoofRooms:response.data.maximumRoom,
@@ -53,6 +56,8 @@ class App extends Component{
     }
 
   componentDidMount() {
+      //Getting details when the component is mounted
+      //Calling the getDetails method after 15s
     this.getDetails();
     setInterval(()=>{
       this.getDetails()
@@ -68,17 +73,18 @@ class App extends Component{
             <thead>
             <tr className="table-dark">
               <th>Number</th>
-              {this.state.NoofRoomsList.map((block,i)=>{
+              {this.state.blocks.map((block,i)=>{
                 return(
                     <th>
                       Room {i+1}
                     </th>
                 )
               })}
+              <th>Room 8</th>
             </tr>
             </thead>
             <tbody>
-
+            {/*Sending data in a floor to the Block.js */}
             {this.state.blocks.map((block,i)=>{
               return(
                   <tr>
@@ -87,13 +93,13 @@ class App extends Component{
               </tr>
               )
             })}
-
             </tbody>
           </table>
           <div className="text-dark">
             Details:
             <p>If the sensor is active : It will be displayed in Green Color</p>
-            <p>If the sensor is not active : It will be displayed in White Color</p>
+            <p>If the sensor is not active : It will be displayed in Yellow Color</p>
+              <p>If there are no more rooms in the floor, rest will be displayed in White Color</p>
             <p>If the CO2(Carbondioxide) level is higher than or equal to level 5 : It will be displayed in Red Color</p>
             <p>If the Smoke level is higher than or equal to level 5 : It will be displayed in Red Color</p>
           </div>
